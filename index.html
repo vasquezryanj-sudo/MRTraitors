@@ -327,12 +327,48 @@
     /* ── PLAYER LIST BUTTON ── */
     .player-list-row {
       display: flex;
-      justify-content: center;
-      margin: 1rem 0;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin: 1.8rem 0 1.6rem;
       animation: fadeUp .9s .5s ease both;
     }
+    .player-list-row .mini-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 60%;
+      max-width: 320px;
+      opacity: .35;
+    }
+    .player-list-row .mini-divider:first-child { margin-bottom: .9rem; }
+    .player-list-row .mini-divider:last-child  { margin-top: .9rem; }
     .btn-player-list {
-      padding: .7rem 2rem;
+      padding: 1rem 3rem;
+      border-color: rgba(201,168,76,.45);
+      background: linear-gradient(160deg, rgba(30,10,10,.97) 0%, rgba(12,4,4,1) 100%);
+      box-shadow:
+        0 0 12px rgba(201,168,76,.15),
+        0 0 30px rgba(201,168,76,.07),
+        inset 0 0 20px rgba(201,168,76,.04);
+    }
+    .btn-player-list .btn-label {
+      font-size: clamp(.7rem, 1.8vw, .85rem);
+      letter-spacing: .25em;
+      color: var(--gold);
+    }
+    .btn-player-list:hover {
+      border-color: rgba(201,168,76,.85);
+      box-shadow:
+        0 0 18px rgba(201,168,76,.35),
+        0 0 40px rgba(201,168,76,.15),
+        0 8px 30px rgba(100,0,0,.5),
+        inset 0 0 25px rgba(201,168,76,.06);
+    }
+    .btn-player-list:hover .btn-label {
+      color: var(--gold-light);
+      text-shadow: 0 0 10px rgba(201,168,76,.5);
     }
 
     /* ── PLAYER LIST VIEW ── */
@@ -501,11 +537,21 @@
   </div>
 
   <div class="player-list-row">
+    <div class="mini-divider">
+      <div class="div-line"></div>
+      <div class="div-diamond-sm"></div>
+      <div class="div-line"></div>
+    </div>
     <a class="btn btn-player-list" href="#" onclick="showPlayers(event)">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
       <span class="btn-label">Player List</span>
     </a>
+    <div class="mini-divider">
+      <div class="div-line"></div>
+      <div class="div-diamond-sm"></div>
+      <div class="div-line"></div>
+    </div>
   </div>
 
   <!-- Sign-Up & Rules buttons side by side -->
