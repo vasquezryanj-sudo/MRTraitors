@@ -330,7 +330,7 @@
       flex-direction: column;
       align-items: center;
       gap: 0;
-      margin: 1.8rem 0 1.6rem;
+      margin: 0.5rem 0 1.6rem;
       animation: fadeUp .9s .5s ease both;
     }
     .player-list-row .mini-divider {
@@ -437,6 +437,234 @@
       }
     }
 
+    /* ── VOTING RESULT VIEW ── */
+    .result-heading {
+      font-family: 'Cinzel', serif;
+      font-weight: 300;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: .8rem;
+      text-shadow: 0 0 20px rgba(201,168,76,.3);
+    }
+    .result-banished {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: .08em;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      max-width: 500px;
+      text-shadow: 0 0 15px rgba(201,168,76,.3);
+    }
+    .flip-card {
+      width: clamp(220px, 60vw, 340px);
+      aspect-ratio: 3/4;
+      perspective: 800px;
+      cursor: pointer;
+      margin: 0 auto 2rem;
+      opacity: 0;
+      transform: scale(.95);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .flip-card.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform .8s cubic-bezier(.4,.0,.2,1);
+      transform-style: preserve-3d;
+    }
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border: 2px solid rgba(201,168,76,.3);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .flip-card-front {
+      background: var(--black);
+    }
+    .flip-card-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .flip-card-front .x-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .flip-card-front .x-overlay::before,
+    .flip-card-front .x-overlay::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0%;
+      height: 14px;
+      background: linear-gradient(90deg,
+        rgba(139,0,0,.6) 0%,
+        var(--crimson-light) 15%,
+        #e8222b 40%,
+        var(--crimson-light) 60%,
+        rgba(139,0,0,.8) 85%,
+        rgba(100,0,0,.5) 100%
+      );
+      box-shadow:
+        0 0 20px rgba(192,21,26,.8),
+        0 0 40px rgba(192,21,26,.4),
+        0 2px 6px rgba(80,0,0,.9),
+        inset 0 -2px 4px rgba(60,0,0,.5);
+      border-radius: 2px 6px 3px 5px;
+    }
+    .flip-card-front .x-overlay::before {
+      transform: translate(-50%,-50%) rotate(45deg);
+    }
+    .flip-card-front .x-overlay::after {
+      transform: translate(-50%,-50%) rotate(-45deg);
+    }
+    .flip-card-front .x-overlay.animate::before {
+      animation: slashDraw .5s .2s cubic-bezier(.2,.8,.3,1) forwards;
+    }
+    .flip-card-front .x-overlay.animate::after {
+      animation: slashDraw .5s .55s cubic-bezier(.2,.8,.3,1) forwards;
+    }
+    @keyframes slashDraw {
+      0%   { width: 0%;   opacity: .8; }
+      60%  { width: 150%; opacity: 1; }
+      80%  { width: 138%; }
+      100% { width: 140%; opacity: 1; }
+    }
+    .x-drip {
+      position: absolute;
+      width: 4px;
+      height: 0;
+      background: linear-gradient(180deg, var(--crimson-light) 0%, rgba(139,0,0,.8) 60%, rgba(80,0,0,0) 100%);
+      border-radius: 0 0 50% 50%;
+      opacity: 0;
+    }
+    .x-drip.animate {
+      animation: drip var(--drip-dur, 1.5s) var(--drip-del, .8s) ease-in forwards;
+    }
+    @keyframes drip {
+      0%   { height: 0; opacity: 0; }
+      10%  { opacity: .9; }
+      100% { height: var(--drip-h, 40px); opacity: 0; }
+    }
+    .flip-card-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(160deg, rgba(16,5,5,.97) 0%, rgba(10,3,3,1) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+    .reveal-role {
+      font-family: 'Creepster', cursive;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      letter-spacing: .1em;
+      text-shadow: 0 0 30px currentColor;
+    }
+    .reveal-role.traitor { color: var(--crimson-light); }
+    .reveal-role.faithful { color: var(--gold-light); font-family: 'Cinzel', serif; font-weight: 600; }
+    .result-click-hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .9rem;
+      color: var(--gold);
+      letter-spacing: .1em;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .result-click-hint.visible {
+      opacity: .75;
+    }
+    .flip-hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .8rem;
+      color: var(--text-dim);
+      letter-spacing: .15em;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: .5; }
+      50% { opacity: 1; }
+    }
+
+    /* ── RULES VIEW ── */
+    .rules-carousel {
+      position: relative;
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto 1.5rem;
+      touch-action: pan-y;
+    }
+    .rules-carousel img {
+      width: 100%;
+      display: block;
+      border-radius: 6px;
+      border: 1px solid rgba(201,168,76,.2);
+    }
+    .rules-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .rules-nav button {
+      background: none;
+      border: 1px solid rgba(201,168,76,.35);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: .85rem;
+      letter-spacing: .1em;
+      padding: .5rem 1.2rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: border-color .3s, color .3s;
+    }
+    .rules-nav button:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+    .rules-nav button:disabled {
+      opacity: .3;
+      cursor: default;
+    }
+    .rules-page-num {
+      font-family: 'Cinzel', serif;
+      font-size: .75rem;
+      color: var(--text-dim);
+      letter-spacing: .15em;
+    }
+    .rules-swipe-hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .75rem;
+      color: var(--text-dim);
+      letter-spacing: .1em;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
     /* ── FOOTER ── */
     .footer {
       margin-top: 2.8rem;
@@ -536,6 +764,15 @@
     <div class="div-line"></div>
   </div>
 
+  <!-- Voting Result button (HIDDEN) -->
+  <div class="player-list-row" style="display:none;">
+    <a class="btn btn-player-list" href="#" onclick="showResult(event)">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <span class="btn-label" id="result-btn-label">Voting Result</span>
+    </a>
+  </div>
+
   <!-- Primary three buttons -->
   <div class="button-grid-primary">
 
@@ -565,48 +802,31 @@
 
   </div>
 
+  <!-- Player List button -->
   <div class="player-list-row">
-    <div class="mini-divider">
-      <div class="div-line"></div>
-      <div class="div-diamond-sm"></div>
-      <div class="div-line"></div>
-    </div>
     <a class="btn btn-player-list" href="#" onclick="showPlayers(event)">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
       <span class="btn-label">Player List</span>
     </a>
-    <div class="mini-divider">
-      <div class="div-line"></div>
-      <div class="div-diamond-sm"></div>
-      <div class="div-line"></div>
-    </div>
   </div>
 
-  <!-- Divider -->
-  <div class="divider btn-divider">
+  <!-- Large divider -->
+  <div class="divider">
     <div class="div-line"></div>
+    <div class="div-diamond-sm"></div>
+    <div class="div-diamond"></div>
     <div class="div-diamond-sm"></div>
     <div class="div-line"></div>
   </div>
 
   <!-- Rules button -->
   <div class="player-list-row">
-    <div class="mini-divider">
-      <div class="div-line"></div>
-      <div class="div-diamond-sm"></div>
-      <div class="div-line"></div>
-    </div>
-    <a class="btn btn-player-list" href="https://www.canva.com/design/DAHEtW2jADI/-TbZy8Nt0zQbNqcNKtv5Ag/view?utm_content=DAHEtW2jADI&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha031a1e940" target="_blank" rel="noopener">
+    <a class="btn btn-player-list" href="#" onclick="showRules(event)">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
       <span class="btn-label">Rules</span>
     </a>
-    <div class="mini-divider">
-      <div class="div-line"></div>
-      <div class="div-diamond-sm"></div>
-      <div class="div-line"></div>
-    </div>
   </div>
 
   <!-- Can can text -->
@@ -664,21 +884,170 @@
     </div>
   </div>
 
+  <!-- Voting Result View (hidden by default) -->
+  <div id="result-view" style="display:none;flex-direction:column;align-items:center;width:100%;">
+    <h2 class="result-heading">Voting Result</h2>
+    <div class="player-divider">
+      <div class="div-line"></div>
+      <div class="div-diamond-sm"></div>
+      <div class="div-diamond"></div>
+      <div class="div-diamond-sm"></div>
+      <div class="div-line"></div>
+    </div>
+    <p class="result-banished" id="result-banished-text"></p>
+    <div class="flip-card" id="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img id="result-photo" src="" alt="Banished player" />
+          <div class="x-overlay" id="x-overlay">
+            <div class="x-drip" style="left:30%;top:38%;--drip-h:35px;--drip-dur:1.8s;--drip-del:.9s;"></div>
+            <div class="x-drip" style="left:52%;top:52%;--drip-h:50px;--drip-dur:2.2s;--drip-del:1.1s;width:5px;"></div>
+            <div class="x-drip" style="left:68%;top:42%;--drip-h:30px;--drip-dur:1.5s;--drip-del:1.3s;width:3px;"></div>
+            <div class="x-drip" style="left:45%;top:48%;--drip-h:45px;--drip-dur:2s;--drip-del:1s;"></div>
+          </div>
+        </div>
+        <div class="flip-card-back">
+          <p class="reveal-role" id="reveal-role"></p>
+        </div>
+      </div>
+    </div>
+    <p class="result-click-hint" id="result-click-hint">Click the photo to see their true identity.</p>
+    <div class="back-link">
+      <a href="#" onclick="showMain(event)">&larr; Back</a>
+    </div>
+  </div>
+
+  <!-- Rules View (hidden by default) -->
+  <div id="rules-view" style="display:none;flex-direction:column;align-items:center;width:100%;">
+    <h2 class="player-heading">Rules</h2>
+    <div class="player-divider">
+      <div class="div-line"></div>
+      <div class="div-diamond-sm"></div>
+      <div class="div-diamond"></div>
+      <div class="div-diamond-sm"></div>
+      <div class="div-line"></div>
+    </div>
+    <div class="rules-carousel" id="rules-carousel">
+      <img id="rules-slide" src="rules/slide-01.jpg" alt="Rules slide" />
+    </div>
+    <p class="rules-swipe-hint">Swipe or use arrows to navigate</p>
+    <div class="rules-nav">
+      <button id="rules-prev" onclick="rulesNav(-1)">&larr; Prev</button>
+      <span class="rules-page-num" id="rules-page-num">1 / 11</span>
+      <button id="rules-next" onclick="rulesNav(1)">Next &rarr;</button>
+    </div>
+    <div class="back-link">
+      <a href="#" onclick="showMain(event)">&larr; Back</a>
+    </div>
+  </div>
+
 </div>
 
 <script>
+  /* ════════════════════════════════════════════
+     UPDATE THESE THREE VALUES EACH ROUND
+     ════════════════════════════════════════════ */
+  const banishedName  = "Ryan";
+  const banishedRole  = "Faithful";   // "Traitor" or "Faithful"
+  const banishedPhoto = "banished.JPG";
+  const resultDate    = "Thursday, April 23";
+  /* ════════════════════════════════════════════ */
+
+  // Set button label with date
+  document.getElementById('result-btn-label').textContent = 'Voting Result (' + resultDate + ')';
+
+  // Populate result view
+  document.getElementById('result-banished-text').textContent = 'The votes are in. The player who received the most votes, and has been banished, is\u2026';
+  document.getElementById('result-photo').src = banishedPhoto;
+  const roleEl = document.getElementById('reveal-role');
+  roleEl.textContent = banishedRole;
+  roleEl.classList.add(banishedRole.toLowerCase());
+
+  function hideAllViews() {
+    document.getElementById('main-view').style.display = 'none';
+    document.getElementById('player-view').style.display = 'none';
+    document.getElementById('result-view').style.display = 'none';
+    document.getElementById('rules-view').style.display = 'none';
+  }
+
   function showPlayers(e) {
     e.preventDefault();
-    document.getElementById('main-view').style.display = 'none';
+    hideAllViews();
     document.getElementById('player-view').style.display = 'flex';
     window.scrollTo(0, 0);
   }
+
+  function showResult(e) {
+    e.preventDefault();
+    hideAllViews();
+    var card = document.getElementById('flip-card');
+    var hint = document.getElementById('result-click-hint');
+    var xOverlay = document.getElementById('x-overlay');
+    var drips = xOverlay.querySelectorAll('.x-drip');
+    card.classList.remove('flipped');
+    card.classList.remove('visible');
+    hint.classList.remove('visible');
+    xOverlay.classList.remove('animate');
+    drips.forEach(function(d) { d.classList.remove('animate'); });
+    document.getElementById('result-view').style.display = 'flex';
+    window.scrollTo(0, 0);
+    setTimeout(function() {
+      card.classList.add('visible');
+    }, 1200);
+    setTimeout(function() {
+      xOverlay.classList.add('animate');
+      drips.forEach(function(d) { d.classList.add('animate'); });
+      hint.classList.add('visible');
+    }, 2600);
+  }
+
   function showMain(e) {
     e.preventDefault();
-    document.getElementById('player-view').style.display = 'none';
+    hideAllViews();
     document.getElementById('main-view').style.display = 'contents';
     window.scrollTo(0, 0);
   }
+
+  // Rules carousel
+  var rulesPage = 1;
+  var rulesTotalPages = 11;
+
+  function showRules(e) {
+    e.preventDefault();
+    hideAllViews();
+    rulesPage = 1;
+    updateRulesSlide();
+    document.getElementById('rules-view').style.display = 'flex';
+    window.scrollTo(0, 0);
+  }
+
+  function rulesNav(dir) {
+    rulesPage = Math.max(1, Math.min(rulesTotalPages, rulesPage + dir));
+    updateRulesSlide();
+  }
+
+  function updateRulesSlide() {
+    var num = rulesPage < 10 ? '0' + rulesPage : '' + rulesPage;
+    document.getElementById('rules-slide').src = 'rules/slide-' + num + '.jpg';
+    document.getElementById('rules-page-num').textContent = rulesPage + ' / ' + rulesTotalPages;
+    document.getElementById('rules-prev').disabled = (rulesPage === 1);
+    document.getElementById('rules-next').disabled = (rulesPage === rulesTotalPages);
+  }
+
+  // Swipe support for rules carousel
+  (function() {
+    var carousel = document.getElementById('rules-carousel');
+    var startX = 0;
+    carousel.addEventListener('touchstart', function(e) {
+      startX = e.touches[0].clientX;
+    }, {passive: true});
+    carousel.addEventListener('touchend', function(e) {
+      var diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        rulesNav(diff > 0 ? 1 : -1);
+      }
+    });
+  })();
 
   const field = document.getElementById('sparkles');
   for (let i = 0; i < 35; i++) {
