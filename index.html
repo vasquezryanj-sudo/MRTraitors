@@ -665,6 +665,32 @@
       margin-bottom: 1rem;
     }
 
+    /* ── ANNOUNCEMENT BLOCK ── */
+    .announcement {
+      text-align: center;
+      margin: .8rem 0 1.2rem;
+      animation: fadeUp .9s .5s ease both;
+    }
+    .announcement-label {
+      font-family: 'Cinzel', serif;
+      font-weight: 300;
+      font-size: clamp(.6rem, 1.8vw, .78rem);
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .7;
+    }
+    .announcement-date {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: clamp(.9rem, 2.6vw, 1.2rem);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      text-shadow: 0 0 18px rgba(201,168,76,.35);
+      margin-top: .3rem;
+    }
+
     /* ── FOOTER ── */
     .footer {
       margin-top: 2.8rem;
@@ -760,6 +786,17 @@
     <div class="div-line"></div>
     <div class="div-diamond-sm"></div>
     <div class="div-diamond"></div>
+    <div class="div-diamond-sm"></div>
+    <div class="div-line"></div>
+  </div>
+
+  <div class="announcement">
+    <p class="announcement-label">Next Banishment Vote&hellip;</p>
+    <p class="announcement-date">Saturday, April 25</p>
+  </div>
+
+  <div class="divider btn-divider">
+    <div class="div-line"></div>
     <div class="div-diamond-sm"></div>
     <div class="div-line"></div>
   </div>
