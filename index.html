@@ -691,6 +691,139 @@
       margin-top: .3rem;
     }
 
+    /* ── MURDER BUTTON ── */
+    .btn-murder {
+      padding: 1rem 3rem;
+      border-color: rgba(192,21,26,.45);
+      background: linear-gradient(160deg, rgba(40,5,5,.97) 0%, rgba(12,4,4,1) 100%);
+    }
+    .btn-murder .btn-label {
+      font-family: 'Creepster', cursive;
+      font-size: clamp(.8rem, 2.2vw, 1.1rem);
+      letter-spacing: .08em;
+      color: var(--crimson-light);
+      text-shadow: 0 0 15px rgba(192,21,26,.5);
+    }
+    .btn-murder:hover {
+      border-color: rgba(192,21,26,.7);
+      box-shadow: 0 0 25px rgba(192,21,26,.3);
+    }
+    .btn-murder:hover .btn-label {
+      text-shadow: 0 0 25px rgba(192,21,26,.8);
+    }
+
+    /* ── MURDER VIEW ── */
+    .murder-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      color: var(--gold);
+      text-align: center;
+      line-height: 1.8;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      letter-spacing: .05em;
+    }
+    .murder-flip-card {
+      width: clamp(220px, 60vw, 340px);
+      aspect-ratio: 1/1;
+      perspective: 800px;
+      cursor: pointer;
+      margin: 0 auto 2rem;
+      opacity: 0;
+      transform: scale(.95);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .murder-flip-card.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .murder-flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform .8s cubic-bezier(.4,.0,.2,1);
+      transform-style: preserve-3d;
+    }
+    .murder-flip-card.flipped .murder-flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .murder-flip-front,
+    .murder-flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border: 2px solid rgba(201,168,76,.3);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .murder-flip-front {
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(240,208,128,.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(240,208,128,.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(201,168,76,.08) 0%, transparent 70%),
+        linear-gradient(160deg, rgba(30,20,5,1) 0%, rgba(15,10,2,1) 50%, rgba(25,18,5,1) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .murder-flip-front .gold-seal {
+      width: 60%;
+      opacity: .5;
+    }
+    .murder-flip-front::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(201,168,76,.2);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    .murder-flip-front::after {
+      content: '?';
+      position: absolute;
+      font-family: 'Creepster', cursive;
+      font-size: clamp(4rem, 15vw, 7rem);
+      color: rgba(201,168,76,.15);
+      text-shadow: 0 0 30px rgba(201,168,76,.1);
+    }
+    .murder-flip-back {
+      transform: rotateY(180deg);
+      background: var(--black);
+    }
+    .murder-flip-back img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .murder-click-hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .9rem;
+      color: var(--gold);
+      letter-spacing: .1em;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .murder-click-hint.visible {
+      opacity: .75;
+    }
+
+    /* ── GHOST INFO VIEW ── */
+    .ghost-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(1rem, 2.8vw, 1.25rem);
+      color: var(--gold-pale);
+      text-align: center;
+      line-height: 1.8;
+      max-width: 550px;
+      margin: 0 auto 2rem;
+      letter-spacing: .03em;
+    }
+
     /* ── FOOTER ── */
     .footer {
       margin-top: 2.8rem;
@@ -810,6 +943,15 @@
     </a>
   </div>
 
+  <!-- Murder button -->
+  <div class="player-list-row">
+    <a class="btn btn-murder" href="#" onclick="showMurder(event)">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <span class="btn-label">There's Been a Murder!</span>
+    </a>
+  </div>
+
   <!-- Primary three buttons -->
   <div class="button-grid-primary">
 
@@ -839,6 +981,15 @@
 
   </div>
 
+  <!-- Ghost Help button -->
+  <div class="player-list-row">
+    <a class="btn btn-player-list" href="#" onclick="showGhost(event)">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <span class="btn-label">Help! I Died! Now What?</span>
+    </a>
+  </div>
+
   <!-- Player List button -->
   <div class="player-list-row">
     <a class="btn btn-player-list" href="#" onclick="showPlayers(event)">
@@ -865,6 +1016,7 @@
       <span class="btn-label">Rules</span>
     </a>
   </div>
+
 
   <!-- Can can text -->
   <div class="footer">
@@ -978,17 +1130,72 @@
     </div>
   </div>
 
+  <!-- Ghost Info View (hidden by default) -->
+  <div id="ghost-view" style="display:none;flex-direction:column;align-items:center;width:100%;">
+    <h2 class="player-heading">Help! I Died!</h2>
+    <div class="player-divider">
+      <div class="div-line"></div>
+      <div class="div-diamond-sm"></div>
+      <div class="div-diamond"></div>
+      <div class="div-diamond-sm"></div>
+      <div class="div-line"></div>
+    </div>
+    <p class="ghost-text">
+      You can still play, and vote! In fact, you're encouraged to!
+      <br><br>
+      The Ghost Vote, all combined, will count as one vote toward banishment.
+      So if a majority of Ghosts vote for someone, they will get a +1 to their
+      voting total for the day.
+      <br><br>
+      It could break a tie, and decide someone's fate.
+      So keep playing! :)
+    </p>
+    <div class="back-link">
+      <a href="#" onclick="showMain(event)">&larr; Back</a>
+    </div>
+  </div>
+
+  <!-- Murder View (hidden by default) -->
+  <div id="murder-view" style="display:none;flex-direction:column;align-items:center;width:100%;">
+    <h2 class="result-heading">There's Been a Murder!</h2>
+    <div class="player-divider">
+      <div class="div-line"></div>
+      <div class="div-diamond-sm"></div>
+      <div class="div-diamond"></div>
+      <div class="div-diamond-sm"></div>
+      <div class="div-line"></div>
+    </div>
+    <p class="murder-text">Click to reveal which Faithful had their dying day&hellip; last night.</p>
+    <div class="murder-flip-card" id="murder-flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="murder-flip-card-inner">
+        <div class="murder-flip-front"></div>
+        <div class="murder-flip-back">
+          <img id="murder-photo" src="" alt="Murdered player" />
+        </div>
+      </div>
+    </div>
+    <p class="murder-click-hint" id="murder-click-hint">Tap to reveal</p>
+    <div class="back-link">
+      <a href="#" onclick="showMain(event)">&larr; Back</a>
+    </div>
+  </div>
+
 </div>
 
 <script>
   /* ════════════════════════════════════════════
-     UPDATE THESE THREE VALUES EACH ROUND
+     UPDATE THESE VALUES EACH ROUND
      ════════════════════════════════════════════ */
   const banishedName  = "Ryan";
   const banishedRole  = "Faithful";   // "Traitor" or "Faithful"
-  const banishedPhoto = "banished.JPG";
+  const banishedPhoto = "banished/victim.png";
   const resultDate    = "Thursday, April 23";
+
+  const murderedPhoto = "murder/victim.png";
   /* ════════════════════════════════════════════ */
+
+  // Populate murder view
+  document.getElementById('murder-photo').src = murderedPhoto;
 
   // Set button label with date
   document.getElementById('result-btn-label').textContent = 'Voting Result (' + resultDate + ')';
@@ -1005,6 +1212,8 @@
     document.getElementById('player-view').style.display = 'none';
     document.getElementById('result-view').style.display = 'none';
     document.getElementById('rules-view').style.display = 'none';
+    document.getElementById('ghost-view').style.display = 'none';
+    document.getElementById('murder-view').style.display = 'none';
   }
 
   function showPlayers(e) {
@@ -1048,6 +1257,29 @@
   // Rules carousel
   var rulesPage = 1;
   var rulesTotalPages = 11;
+
+  function showMurder(e) {
+    e.preventDefault();
+    hideAllViews();
+    var card = document.getElementById('murder-flip-card');
+    var hint = document.getElementById('murder-click-hint');
+    card.classList.remove('flipped');
+    card.classList.remove('visible');
+    hint.classList.remove('visible');
+    document.getElementById('murder-view').style.display = 'flex';
+    window.scrollTo(0, 0);
+    setTimeout(function() {
+      card.classList.add('visible');
+      hint.classList.add('visible');
+    }, 1200);
+  }
+
+  function showGhost(e) {
+    e.preventDefault();
+    hideAllViews();
+    document.getElementById('ghost-view').style.display = 'flex';
+    window.scrollTo(0, 0);
+  }
 
   function showRules(e) {
     e.preventDefault();
