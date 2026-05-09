@@ -673,21 +673,22 @@
     }
     .announcement-label {
       font-family: 'Cinzel', serif;
-      font-weight: 300;
-      font-size: clamp(.6rem, 1.8vw, .78rem);
-      letter-spacing: .45em;
+      font-weight: 600;
+      font-size: clamp(1.4rem, 4.5vw, 2.4rem);
+      letter-spacing: .25em;
       text-transform: uppercase;
-      color: var(--gold);
-      opacity: .7;
+      color: var(--gold-light);
+      text-shadow: 0 0 25px rgba(201,168,76,.5), 0 0 50px rgba(201,168,76,.2);
+      margin-bottom: .8rem;
     }
     .announcement-date {
       font-family: 'Cinzel', serif;
-      font-weight: 600;
-      font-size: clamp(.9rem, 2.6vw, 1.2rem);
+      font-weight: 300;
+      font-size: clamp(.7rem, 2vw, .95rem);
       letter-spacing: .2em;
       text-transform: uppercase;
-      color: var(--gold-light);
-      text-shadow: 0 0 18px rgba(201,168,76,.35);
+      color: var(--gold);
+      opacity: .85;
       margin-top: .3rem;
     }
 
@@ -915,12 +916,6 @@
     <p class="announcement-date">Finale begins at 5:30p in the Blue Room!<br>Good luck, players.</p>
   </div>
 
-  <div class="divider btn-divider">
-    <div class="div-line"></div>
-    <div class="div-diamond-sm"></div>
-    <div class="div-line"></div>
-  </div>
-
   <!-- Voting Result button (HIDDEN) -->
   <div class="player-list-row" style="display:none;">
     <a class="btn btn-player-list" href="#" onclick="showResult(event)">
@@ -939,17 +934,13 @@
     </a>
   </div>
 
-  <!-- Primary three buttons -->
-  <div class="button-grid-primary">
-
-    <a class="btn btn-primary" href="https://docs.google.com/spreadsheets/d/1RBo0tjinEOfuKik4Tnx4wHw6jk-a_ZNCvO3s3wYKCcI/edit?gid=0#gid=0" target="_blank" rel="noopener">
+  <!-- Voting History button -->
+  <div class="player-list-row">
+    <a class="btn btn-player-list" href="https://docs.google.com/spreadsheets/d/1RBo0tjinEOfuKik4Tnx4wHw6jk-a_ZNCvO3s3wYKCcI/edit?gid=0#gid=0" target="_blank" rel="noopener">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
-      <span class="btn-icon">📜</span>
-      <span class="btn-label">Voting<br>History</span>
-      <span class="btn-sub">Check the record</span>
+      <span class="btn-label">Voting History</span>
     </a>
-
   </div>
 
   <!-- Player List button (HIDDEN) -->
@@ -961,15 +952,6 @@
     </a>
   </div>
 
-  <!-- Large divider -->
-  <div class="divider">
-    <div class="div-line"></div>
-    <div class="div-diamond-sm"></div>
-    <div class="div-diamond"></div>
-    <div class="div-diamond-sm"></div>
-    <div class="div-line"></div>
-  </div>
-
   <!-- Rules button -->
   <div class="player-list-row">
     <a class="btn btn-player-list" href="#" onclick="showRules(event)">
@@ -978,7 +960,6 @@
       <span class="btn-label">Rules</span>
     </a>
   </div>
-
 
   <!-- Can can text -->
   <div class="footer">
